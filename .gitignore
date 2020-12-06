@@ -1,0 +1,5 @@
+.env
+node_modules
+usermodule
+testpromiseall.js
+*.json

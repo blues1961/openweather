@@ -1,0 +1,158 @@
+body {
+  background-image: url("/images/bg-image.JPG");
+  background-size: 100%;
+  color: white;
+  margin:0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #6d959d;
+  opacity:50%;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #497285;
+}
+
+form {
+  margin:20px;
+}
+
+div .btn-group{
+  margin:0px 0px 0px 0px;
+  spacing:0px 0px 0px 0px;
+  border-style: none;
+}
+
+.city{
+  font-size: 2rem;
+}
+
+.date{
+  font-size: 1.5rem;
+  padding-top: 10px;
+}
+
+
+.current-data{
+  text-align: center;
+}
+
+.current-group {
+    display:inline-block;
+}
+
+.image-description{
+  border: 1px;
+  border-style: none;
+  display:inline-block;
+  width:auto;
+}
+
+.big-icon {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-right:50px;
+  width: 150px;
+  height: 150px;
+}
+
+.degre {
+
+  font-size: 4rem;
+}
+
+.degre:after {
+  content: "\00b0 C"
+}
+
+.description{
+  font-size: 2.5rem;
+}
+
+.forecast {
+  text-align: center;
+}
+
+.forecast-group{
+  display:inline-block;
+  border-style:solid;
+  border-color: #324f5b;
+}
+
+.forecast-degre {
+  position: relative;
+  text-align: center;
+
+  font-size: 0.75rem;
+  background-color: black;
+  opacity: 40%;
+  padding:5px;
+}
+
+.forecast-hour {
+
+  text-align: center;
+  font-size: 0.75rem;
+  background-color: black;
+  opacity: 40%;
+  padding: 5px;
+
+}
+
+.forecast-image {
+  width: 90px;
+  height: 90px;
+  z-index: -1;
+}
+
+.form{
+  margin-top: 100px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.form-group{
+  display:inline-block;
+  text-align: center;
+}
+
+.btn-group .button {
+  background-color: black;
+  border-style:none;
+  color: white;
+  opacity:40%;
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+
+
+}
+
+.btn-group .button:hover {
+  background-color: black;
+  opacity:50%;
+}
+
+.btn-group .button .active{
+  background-color: red;
+}
