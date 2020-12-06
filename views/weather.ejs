@@ -1,5 +1,9 @@
 <%- include partials/header -%>
+<!--
 
+      current data
+
+  -->
      <div class="current-data">
         <div class='city'> <%=data[0].name%> </div>
         <% var options = {day:'numeric',month:'long',year:'numeric'}; %>
@@ -11,6 +15,10 @@
         </div>
      </div>
 
+<!--
+      form pour selectionner les previsions de la journee courrante ou le lendemain
+
+  -->
      <div class="form">
         <form action="/" method="post">
           <h3>Prévisions Horaires</h3>
@@ -32,6 +40,11 @@
           </form>
     </div>
 
+<!--
+
+    affichage des previsions horaire (forecast data)
+
+  -->
     <div class="forecast">
       <% todayDT    = new Date(data[0].dt*1000) %>
       <% tomorrowDT = new Date(); tomorrowDT.setDate(todayDT.getDate() + 1) %>
@@ -48,5 +61,4 @@
     </div>
 
 </body>
-
 </html>
