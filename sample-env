@@ -1,0 +1,7 @@
+API_KEY		=	{your api key from openweathermap}
+API_CITY_ID	=	{default city id - not use by the app}
+API_CITY	=	{default city name in the format city,st,country code} 
+API_UNITS	=	{default unit display}
+API_LANGUE	=	{language for the response}
+CURRENT_BASE_URL=	http://api.openweathermap.org/data/2.5/weather
+FORECAST_BASE_URL=	http://api.openweathermap.org/data/2.5/forecast
