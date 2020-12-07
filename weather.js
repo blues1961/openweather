@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const https=require("https");
 const fetch = require('node-fetch');
 
-const convertUTC = require(__dirname + "/usermodule/utcdate.js");
+//const convertUTC = require(__dirname + "/usermodule/utcdate.js");
 
 const apiID = process.env.API_KEY;
 const units = process.env.API_UNITS;
