@@ -1,6 +1,7 @@
 body {
   background-image: url("/images/bg-image.JPG");
-  background-size: 100%;
+  background-repeat:no-repeat;
+  background-size: 100% 100%;
   color: white;
   margin:0;
   font-size: 1rem;
@@ -13,7 +14,7 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #6d959d;
-  opacity:50%;
+  opacity:50;
 }
 
 li {
@@ -32,13 +33,10 @@ li a:hover:not(.active) {
   background-color: #497285;
 }
 
-form {
-  margin:20px;
-}
 
 div .btn-group{
-  margin:0px 0px 0px 0px;
-  spacing:0px 0px 0px 0px;
+  margin:0;
+  padding:0;
   border-style: none;
 }
 
@@ -69,11 +67,10 @@ div .btn-group{
 }
 
 .big-icon {
-  padding-top: 10px;
-  padding-bottom: 20px;
-  padding-right:50px;
   width: 150px;
   height: 150px;
+  padding-bottom: 20px;
+  padding-right: 20px;
 }
 
 .degre {
@@ -91,6 +88,7 @@ div .btn-group{
 
 .forecast {
   text-align: center;
+  padding: 10px;
 }
 
 .forecast-group{
@@ -125,8 +123,8 @@ div .btn-group{
   z-index: -1;
 }
 
-.form{
-  margin-top: 100px;
+.form {
+  padding:50px;
   text-align: center;
   font-size: 1.5rem;
 }
@@ -145,8 +143,6 @@ div .btn-group{
   text-align: center;
   font-size: 1rem;
   cursor: pointer;
-
-
 }
 
 .btn-group .button:hover {
@@ -154,6 +150,11 @@ div .btn-group{
   opacity:50%;
 }
 
-.btn-group .button .active{
-  background-color: red;
+.active{
+  opacity: 100%;
+  background-color: black;
+}
+
+.location{
+  text-align: left;
 }

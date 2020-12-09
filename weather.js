@@ -32,12 +32,12 @@ app.set('view engine', 'ejs');
 let day='today';
 
 app.get("/", function(req, res) {
-  let currentURL=currentBaseURL+"?q="+city+options
-  let forecastURL=forecastBaseURL+"?q="+city+options
-  let urls = [currentURL,forecastURL];
-  let promises = urls.map(url => fetchJSON(url));
-  //console.log(promises);
-  Promise.all(promises).then(function(responses){
+   let currentURL=currentBaseURL+"?q="+city+options
+   let forecastURL=forecastBaseURL+"?q="+city+options
+   let urls = [currentURL,forecastURL];
+   let promises = urls.map(url => fetchJSON(url));
+   //console.log(promises);
+   Promise.all(promises).then(function(responses){
     //console.log(promises);
     //console.log("before render");
     //console.log(responses);
@@ -59,7 +59,7 @@ app.get("/location",function(req,res){
 app.post("/",function(req,res){
     console.log(req.body);
     day = req.body.button;
-    city=req.body.city
+    city=req.body.city.replace(' ','%20');
     console.log("=============",day,city)
     res.redirect("/");
 
