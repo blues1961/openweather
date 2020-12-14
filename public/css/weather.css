@@ -158,6 +158,7 @@ div .btn-group{
 .location{
   text-align: left;
 }
+<<<<<<< HEAD
 
 .footer{
    position: fixed;
@@ -167,4 +168,27 @@ div .btn-group{
    background-color: #324f5b;
    color: white;
    text-align: center;
+=======
+.container{
+  margin: 40PX 20PX;
+  padding-bottom: 20PX;
+
+}
+.container .btn-group{
+  padding: 10px 10px;
+  background-color: black;
+  color: white;
+  opacity:50%;
+}
+
+.container .btn-group:hover{
+    background-color: black;
+    opacity:70%;
+}
+.footer{
+  margin-top: 50px;
+  padding-top: 20px;
+  padding-bottom: 20PX;
+  background-color: #2b5874;
+>>>>>>> 414475cd687d0f9911286e3063a0ee471100f17b
 }
