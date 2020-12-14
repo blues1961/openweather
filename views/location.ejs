@@ -1,7 +1,12 @@
+<div>
 <%- include partials/header -%>
+
 
  <form class="location" action="/" method="post">
    <input type="text" name="city" value=<%=city%> placeholder="City, state, country Code">
    <input type="hidden" name="day" value="today">
    <button class='btn' type="submit" name="changeLocation">Change Location</button>
  </form>
+
+<%- include partials/footer -%>
+ </div>
