@@ -158,3 +158,19 @@ div .btn-group{
 .location{
   text-align: left;
 }
+.container{
+  margin: 40PX 20PX;
+  padding-bottom: 20PX;
+
+}
+.container .btn-group{
+  padding: 10px 10px;
+  background-color: black;
+  color: white;
+  opacity:50%;
+}
+
+.container .btn-group:hover{
+    background-color: black;
+    opacity:70%;
+}
