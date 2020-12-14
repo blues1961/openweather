@@ -43,6 +43,8 @@ app.get("/", function(req, res) {
     //console.log(responses);
     //console.log(currentURL);
     if (responses[0].cod==200 && responses[1].cod==200){
+
+        //res.send(responses[0]);
         res.render('weather',{data:responses,day:day,city:city});
     } else {
       res.render("error",{data:responses,city:city});

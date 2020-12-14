@@ -1,3 +1,4 @@
+<body>
 <%- include partials/header -%>
 <!--
 
@@ -5,7 +6,7 @@
 
   -->
      <div class="current-data">
-        <div class='city'> <%=data[0].name%> </div>
+        <div class='city'> <%=data[0].name%>, <%=data[0].sys.country%></div></div>
         <% var options = {day:'numeric',month:'long',year:'numeric'}; %>
         <div class='date'> <%=new Date(data[0].dt*1000).toLocaleDateString('fr-CA',options)%> </div>
         <div class='image-description'><img class="big-icon" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt=""/></div>
@@ -52,17 +53,15 @@
           <% if (new Date(item.dt*1000).getDate()==targetDate) {%>
             <div class='forecast-group'>
               <div class='forecast-hour'><%= new Date(item.dt*1000).getHours()+"h" %></div>
-              <div class='forecast-image'><img src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
+              <div><img class="forecast-image" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
               <div class='forecast-degre degre'><%= Math.round(item.main.temp) %></div>
             </div>
           <%}%>
       <% }); %>
     </div>
-<<<<<<< HEAD
-<%- include partials/footer -%>
-=======
 
 <%- include partials/footer -%>
+
+
 </body>
 </html>
->>>>>>> 414475cd687d0f9911286e3063a0ee471100f17b

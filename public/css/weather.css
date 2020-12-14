@@ -14,6 +14,8 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #6d959d;
+  width:100%;
+
   opacity:50;
 }
 
@@ -41,7 +43,7 @@ div .btn-group{
 }
 
 .city{
-  padding-top: 50px;
+  padding-top: 20px;
   font-size: 2rem;
 }
 
@@ -68,8 +70,7 @@ div .btn-group{
 
 .big-icon {
   width: 150px;
-  height: 150px;
-  padding-bottom: 20px;
+ /*padding-bottom: 20px; */
   padding-right: 20px;
 }
 
@@ -118,13 +119,12 @@ div .btn-group{
 }
 
 .forecast-image {
-  width: 90px;
-  height: 90px;
-  z-index: -1;
+  width: 80px;
+    z-index: -1;
 }
 
 .form {
-  padding:50px;
+  padding:30px;
   text-align: center;
   font-size: 1.5rem;
 }
@@ -158,17 +158,9 @@ div .btn-group{
 .location{
   text-align: left;
 }
-<<<<<<< HEAD
 
-.footer{
-   position: fixed;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   background-color: #324f5b;
-   color: white;
-   text-align: center;
-=======
+
+
 .container{
   margin: 40PX 20PX;
   padding-bottom: 20PX;
@@ -186,9 +178,10 @@ div .btn-group{
     opacity:70%;
 }
 .footer{
+  width:100%;
+  height:100px;
   margin-top: 50px;
   padding-top: 20px;
   padding-bottom: 20PX;
   background-color: #2b5874;
->>>>>>> 414475cd687d0f9911286e3063a0ee471100f17b
 }
