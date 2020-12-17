@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.clear{
+  display:block;
+}
+.container{
+    border:1px;
+    border-style:solid;
+    text-align:center;
+	padding:30px;
+    background-color:#21f1f1f1;
+
+}
+
+.bigbox {
+  height: 200px;
+  width: 200px;
+  margin:1px;
+  background-color: powderblue;
+  padding:20px 20px;
+}
+.mediumbox {
+  height: 90px;
+  width: 90px;
+  margin:1px;
+  background-color: powderblue;
+  padding:20px 20px;
+}
+
+
+.box {
+  height: 80px;
+  width: 80px;
+  margin:1px;
+  background-color: powderblue;
+}
+
+
+.iflex{
+  display:inline-flex
+ }
+
+.text{
+text-align:left;
+margin-left:50px;
+}
+
+.panel-left{
+  background-color: #5ff5ff;
+}
+.panel-right{
+  margin:auto;
+  text-align: center;
+  background-color: yellow;
+}
+
+.main{
+  margin:auto;
+  text-align: center;
+}
+
+</style>
+
+</head>
+<body>
+<div class='container'>
+<h1>Longueuil</h1>
+
+<h2>12 décembre 2020</h2>
+</div>
+
+<div class="main">
+
+<div class='iflex'>
+
+  <div class="container panel-left">
+
+    <div class='container'>
+
+      <div class='iflex'>
+          <div class='bigbox'></div>
+          <div class='text'>
+	             <h1>-15&deg;C</h1>
+	             <h1>Couvert</h1>
+          </div>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="container">
+      <div class='iflex'>
+          <input type="button" class="button" value="Input Button1">
+          <input type="button" class="button" value="Input Button2">
+      </div>
+      </div>
+
+    <div class="clear"></div>
+
+
+      <div class="container">
+
+
+      <div class='iflex'>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+          </div>
+          <div>
+              <div>top</div>
+              <div class='box'></div>
+              <div>bottom</div>
+            </div>
+      </div>
+      </div>
+</div>
+</div>
+
+
+<div class="container panel-right">
+    <div>
+        <div>top</div>
+        <div class='mediumbox'></div>
+        <div>bottom</div>
+    </div>
+
+    <div>
+        <div>top</div>
+        <div class='mediumbox'></div>
+        <div>bottom</div>
+    </div>
+
+    <div>
+        <div>top</div>
+        <div class='mediumbox'></div>
+        <div>bottom</div>
+    </div>
+
+    <div>
+        <div>top</div>
+        <div class='mediumbox'></div>
+        <div>bottom</div>
+    </div>
+
+</div>
+
+</div>
+</div
+</body>
+</html>

@@ -1,26 +1,29 @@
-<body>
+
 <%- include partials/header -%>
+
 <!--
 
       current data
 
   -->
-     <div class="current-data">
-        <div class='city'> <%=data[0].name%>, <%=data[0].sys.country%></div></div>
+     <div class="container">
+        <h3><%=data[0].name%>, <%=data[0].sys.country%></h3>
         <% var options = {day:'numeric',month:'long',year:'numeric'}; %>
-        <div class='date'> <%=new Date(data[0].dt*1000).toLocaleDateString('fr-CA',options)%> </div>
-        <div class='image-description'><img class="big-icon" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt=""/></div>
-        <div class='current-group'>
-          <div class='degre'> <%= Math.round(data[0].main.temp) %> </div>
-          <div class='description'><%= data[0].weather[0].description %></div>
-        </div>
+        <h3> <%=new Date(data[0].dt*1000).toLocaleDateString('fr-CA',options)%> </h3>
+        <span class="current-data">
+            <img class="big-icon current-data" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt=""/>
+            <div class='current-weather'>
+                <h1 class='degre'> <%= Math.round(data[0].main.temp) %></h1>
+                <h2><%= data[0].weather[0].description %></h2>
+            </div>
+        </span>
      </div>
 
 <!--
       form pour selectionner les previsions de la journee courrante ou le lendemain
 
   -->
-     <div class="form">
+     <div class="container">
         <form action="/" method="post">
         <div class='form-group'>
           <div class="btn-group">

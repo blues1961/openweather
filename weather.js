@@ -15,7 +15,7 @@ const forecastBaseURL=process.env.FORECAST_BASE_URL
 const options= "&lang="+lang + "&units=" + units + "&appid=" + apiID;
 
 let  city = process.env.API_CITY;
-
+let day='today';
 
 function fetchJSON(url) {
     return fetch(url).then(response => response.json());
@@ -29,8 +29,6 @@ app.set('view engine', 'ejs');
 
 // get request
 
-let day='today';
-
 app.get("/", function(req, res) {
    let currentURL=currentBaseURL+"?q="+city+options
    let forecastURL=forecastBaseURL+"?q="+city+options
@@ -43,18 +41,16 @@ app.get("/", function(req, res) {
     //console.log(responses);
     //console.log(currentURL);
     if (responses[0].cod==200 && responses[1].cod==200){
-
         //res.send(responses[0]);
-        res.render('weather',{data:responses,day:day,city:city});
+        res.render('weather',{page:'home',data:responses,day:day,city:city});
     } else {
-      res.render("error",{data:responses,city:city});
-
+      res.render("error",{page:'error',data:responses,day:day,city:city});
     }
   })
 });
 
 app.get("/location",function(req,res){
-   res.render('location',{city:city})
+   res.render('location',{page:'location',day:day,city:city})
 });
 // post request
 
@@ -68,9 +64,6 @@ app.post("/",function(req,res){
 });
 
 // start Server
-
 app.listen(3000, function() {
-
   console.log("Server is running on port 3000.");
-
 });

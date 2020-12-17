@@ -1,2 +1,17 @@
-<%=data[0].cod+' '+ data[0].message+' '+ city %>
-<%=data[1].cod+' '+ data[1].message+' '+ city %>
+<%- include partials/header -%>
+<div class="error">
+
+<h1>Ville inconnue</h1>
+
+<h2>Veuillez choisir une autre ville</h2>
+
+<div class="container">
+ <form class="location" action="/" method="post">
+   <input type="text" name="city" value=<%=city%> placeholder="City, state, country Code">
+   <input type="hidden" name="button" value=<%=day%>>
+   <button class='btn-group button' type="submit" name="changeLocation">Change Location</button>
+ </form>
+ </div>
+</DIV>
+
+<%- include partials/footer -%>
