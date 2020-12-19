@@ -42,7 +42,7 @@ app.get("/", function(req, res) {
     //console.log(currentURL);
     if (responses[0].cod==200 && responses[1].cod==200){
         //res.send(responses[0]);
-        res.render('weather',{page:'home',data:responses,day:day,city:city});
+        res.render('meteo',{page:'home',data:responses,day:day,city:city});
     } else {
       res.render("error",{page:'error',data:responses,day:day,city:city});
     }

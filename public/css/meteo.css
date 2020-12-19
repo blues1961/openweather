@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
+body {
+  background-image: url("/images/bg-image.JPG");
+  background-repeat:no-repeat;
+  background-size: 100% 100%;
+  color: white;
+  padding:0;
+  margin:0;
+  height: 100%;
+}
+
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.75rem;
+}
+h3 {
+  font-size: 2rem;
+}
 
 .button {
-  background-color: #4CAF50;
+  background-color: black;
+  opacity:40%
   border: none;
   color: white;
   padding: 15px 32px;
@@ -13,181 +29,136 @@
   font-size: 16px;
   cursor: pointer;
 }
-.clear{
-  display:block;
-}
 .container{
-    border:1px;
-    border-style:solid;
-    text-align:center;
-	padding:30px;
-    background-color:#21f1f1f1;
-
+    margin:auto;
+}
+.short-term{
+   margin: auto;
+   text-align: center;
+   padding-top:50px;
+}
+.center{
+   text-align: center;
 }
 
-.bigbox {
+.big-icon {
   height: 200px;
   width: 200px;
-  margin:1px;
-  background-color: powderblue;
-  padding:20px 20px;
-}
-.mediumbox {
-  height: 90px;
-  width: 90px;
-  margin:1px;
-  background-color: powderblue;
   padding:20px 20px;
 }
 
-
-.box {
-  height: 80px;
-  width: 80px;
-  margin:1px;
-  background-color: powderblue;
+.medium-icon {
+  height:90px;
+  width:90px;
+  padding:0px 20px;
 }
 
+.degre:after {
+  content: " \00b0 C"
+}
 
 .iflex{
-  display:inline-flex
- }
+  display:inline-flex;
+  flex-direction:row;
 
-.text{
-text-align:left;
-margin-left:50px;
+}
+.flexitem-align-top{
+  self-align:top;
+}
+.text-align-left{
+  text-align:left;
+}
+
+.long-term{
+  flex-direction:column;
+  border:2px solid black;
+}
+
+.topnav, .button {
+  background-color: black;
+  opacity:40%;
+   overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  display:inline-block;
+  color: white;
+  text-align: center;
+  padding: 8px 10px;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover:not(.active) {
+  background-color: white;
+  color: black;
+}
+
+.button:{
+  border:none;
+  padding:0;
+}
+.button:hover:not(.active) {
+  background-color: white;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.active {
+  background-color: black;
+  opacity:90%;
+  color: white;
+}
+
+.current-weather{
+  display:inline-flex;
+  flex-direction: column;
+}
+.panel-long-term{
+  /*border:2px solid red;*/
+  display:inline-flex;
+  flex-direction: column;
+}
+
+.long-term-item{
+
+  background-color:black;
+  opacity: 40%;
+  padding:10px;
+  margin:1px;
+  border:1px solid black;
+
+}
+.padding20{
+  padding:20px;
+}
+
+.footer{
+  position:fixed;
+  width:100%;
+  bottom:0;
+  background-color: black;
+  opacity: 60%;
 }
 
 .panel-left{
-  background-color: #5ff5ff;
+
+  /*border:2px solid red;*/
+  align-self:center;
 }
 .panel-right{
-  margin:auto;
-  text-align: center;
-  background-color: yellow;
-}
+  align-self:flex-end;
+  margin-right: 50px;
+/*  border:2px solid red;*/
 
+}
 .main{
-  margin:auto;
-  text-align: center;
+/*  border:10px solid blue;*/
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  width:100%
+
 }
-
-</style>
-
-</head>
-<body>
-<div class='container'>
-<h1>Longueuil</h1>
-
-<h2>12 décembre 2020</h2>
-</div>
-
-<div class="main">
-
-<div class='iflex'>
-
-  <div class="container panel-left">
-
-    <div class='container'>
-
-      <div class='iflex'>
-          <div class='bigbox'></div>
-          <div class='text'>
-	             <h1>-15&deg;C</h1>
-	             <h1>Couvert</h1>
-          </div>
-      </div>
-
-      <div class="clear"></div>
-
-      <div class="container">
-      <div class='iflex'>
-          <input type="button" class="button" value="Input Button1">
-          <input type="button" class="button" value="Input Button2">
-      </div>
-      </div>
-
-    <div class="clear"></div>
-
-
-      <div class="container">
-
-
-      <div class='iflex'>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-          </div>
-          <div>
-              <div>top</div>
-              <div class='box'></div>
-              <div>bottom</div>
-            </div>
-      </div>
-      </div>
-</div>
-</div>
-
-
-<div class="container panel-right">
-    <div>
-        <div>top</div>
-        <div class='mediumbox'></div>
-        <div>bottom</div>
-    </div>
-
-    <div>
-        <div>top</div>
-        <div class='mediumbox'></div>
-        <div>bottom</div>
-    </div>
-
-    <div>
-        <div>top</div>
-        <div class='mediumbox'></div>
-        <div>bottom</div>
-    </div>
-
-    <div>
-        <div>top</div>
-        <div class='mediumbox'></div>
-        <div>bottom</div>
-    </div>
-
-</div>
-
-</div>
-</div
-</body>
-</html>
