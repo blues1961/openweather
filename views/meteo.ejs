@@ -1,0 +1,97 @@
+<body>
+<%- include partials/header -%>
+<div class="main">
+<div class="container">
+
+</div>
+  <div class="panel-left">
+
+<div class="center">
+     <h2><%=data[0].name%>, <%=data[0].sys.country%></h2>
+     <% var options = {day:'numeric',month:'long',year:'numeric'} %>
+     <h3><%=new Date(data[0].dt*1000).toLocaleDateString('fr-CA',options)%></h3>
+</div>
+
+<div class="center">
+    <div class="container iflex">
+         <div class="container flexitem-align-top">
+           <img class="big-icon" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt="IMAGE">
+         </div>
+        <div class="container flexitem-align-top text-align-left">
+          <h1 class="degre"><%= Math.round(data[0].main.temp) %></h1>
+          <h1><%= data[0].weather[0].description %></h1>
+        </div>
+    </div>
+    <div class="container center "></div>
+</div>
+
+<div class="center padding20">
+
+    <form action="/" method="post">
+      <div class="iflex">
+    <%if (day=='today') { %>
+    <button class="button active" name="button" value="today" onclick="this.form.submit()">Aujourdh'ui</button><!-- to prevent space betwwen button
+  --><button class="button" name="button" value="tomorrow" onclick="this.form.submit()">Demain</button>
+    <input type="hidden" name="city" value=<%=city%>>
+    <input type="hidden" name="day" value=<%=day%>>
+    <% } else { %>
+      <button class="button" name="button" value="today" onclick="this.form.submit()">Aujourdh'ui</button><!-- to prevent space betwwen button
+  --><button class="button active" name="button" value="tomorrow" onclick="this.form.submit()">Demain</button>
+    <input type="hidden" name="city" value=<%=city%>>
+        <input type="hidden" name="day" value=<%=day%>>
+                  <%}%>
+</div>
+              </form>
+  </div>
+
+
+<div class="short-term">
+          <div class="iflex" >
+                <% todayDT    = new Date(data[0].dt*1000) %>
+                <% tomorrowDT = new Date(); tomorrowDT.setDate(todayDT.getDate() + 1) %>
+                <% if  (day=='today') {targetDate=todayDT.getDate()} else {targetDate=tomorrowDT.getDate()}%>
+                <% data[1].list.forEach(function(item){ %>
+                    <% if (new Date(item.dt*1000).getDate()==targetDate) {  %>
+                        <div container>
+                        <div><%= new Date(item.dt*1000).getHours()+"h" %></div>
+                        <div><img class="forecast-image" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
+                        <div class='degre'><%= Math.round(item.main.temp) %></div>
+                      </div>
+
+                    <%}%>
+                <% }); %>
+
+          </div>
+</div>
+</div>
+
+<div class="container">
+
+</div>
+
+<div class="panel-right">
+
+<div class="panel-long-term">
+
+  <% data[1].list.forEach(function(item){ %>
+      <% hour=new Date(item.dt*1000).getHours() %>
+      <%if (hour > 12 && hour < 16) { %>
+          <% var options = {weekday:'long'} %>
+          <div class='long-term-item'>
+             <div class = 'center'>
+              <div><%=new Date(item.dt*1000).toLocaleDateString('fr-CA',options)%></div>
+              <div><img class="medium-icon" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
+              <div class='degre'><%= Math.round(item.main.temp) %></div>
+             </div>
+        </div>
+
+    <%};%>
+  <%});%>
+</div>
+<div class="container"></div>
+
+</div>
+
+</div>
+<%- include partials/footer -%>
+</body>
