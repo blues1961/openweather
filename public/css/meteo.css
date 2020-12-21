@@ -19,10 +19,12 @@ h3 {
 }
 
 .button {
-  background-color: black;
-  opacity:40%
+  display:inline-block;
   border: none;
-  color: white;
+  margin:0;
+  background-color: black;
+  opacity:40%;
+  color:white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -96,19 +98,18 @@ h3 {
   color: black;
 }
 
-.button:{
-  border:none;
-  padding:0;
-}
+
+
 .button:hover:not(.active) {
-  background-color: white;
-  color: black;
+  background-color: black;
+  opacity:30%;
+  color: white;
 }
 
 /* Add a color to the active/current link */
 .active {
   background-color: black;
-  opacity:90%;
+  opacity:70%;
   color: white;
 }
 
@@ -145,12 +146,12 @@ h3 {
 
 .panel-left{
 
-  /*border:2px solid red;*/
-  align-self:center;
+
+  align-items:center-top;
 }
 .panel-right{
   align-self:flex-end;
-  margin-right: 50px;
+/*  margin-right: 50px; */
 /*  border:2px solid red;*/
 
 }
@@ -158,7 +159,10 @@ h3 {
 /*  border:10px solid blue;*/
   display:flex;
   flex-direction: row;
-  align-items:center;
+  align-items:center-top;
   width:100%
 
+}
+.error, .location{
+  padding:20px;
 }

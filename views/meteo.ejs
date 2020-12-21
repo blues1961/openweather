@@ -1,4 +1,4 @@
-<body>
+ <body>
 <%- include partials/header -%>
 <div class="main">
 <div class="container">
@@ -28,20 +28,19 @@
 <div class="center padding20">
 
     <form action="/" method="post">
-      <div class="iflex">
+
     <%if (day=='today') { %>
-    <button class="button active" name="button" value="today" onclick="this.form.submit()">Aujourdh'ui</button><!-- to prevent space betwwen button
-  --><button class="button" name="button" value="tomorrow" onclick="this.form.submit()">Demain</button>
-    <input type="hidden" name="city" value=<%=city%>>
-    <input type="hidden" name="day" value=<%=day%>>
+          <button class="button active" name="button" value="today" onclick="this.form.submit();">Aujourdh'ui</button><!--
+          --><button class="button" name="button" value="tomorrow" onclick="this.form.submit();">Demain</button>
+          <input type="hidden" name="city" value=<%=city%>>
+          <input type="hidden" name="day" value=<%=day%>>
     <% } else { %>
-      <button class="button" name="button" value="today" onclick="this.form.submit()">Aujourdh'ui</button><!-- to prevent space betwwen button
-  --><button class="button active" name="button" value="tomorrow" onclick="this.form.submit()">Demain</button>
-    <input type="hidden" name="city" value=<%=city%>>
-        <input type="hidden" name="day" value=<%=day%>>
+          <button class="button" name="button" value="today" onclick="this.form.submit()">Aujourdh'ui</button><!--
+          --><button class="button active" name="button" value="tomorrow" onclick="this.form.submit()">Demain</button>
+          <input type="hidden" name="city" value=<%=city%>>
+          <input type="hidden" name="day" value=<%=day%>>
                   <%}%>
-</div>
-              </form>
+            </form>
   </div>
 
 

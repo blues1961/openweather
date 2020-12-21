@@ -3,3 +3,4 @@ node_modules
 usermodule
 testpromiseall.js
 package-lock.json
+test.log
