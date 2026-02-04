@@ -1,5 +1,37 @@
  <body>
 <%- include partials/header -%>
+<%
+function formatSnowAmount(snow) {
+  if (!snow) {
+    return null;
+  }
+  if (typeof snow === 'number' && !isNaN(Number(snow))) {
+    return { amount: Math.round(Number(snow) * 10) / 10, label: '3h' };
+  }
+  var hasOneHour = Object.prototype.hasOwnProperty.call(snow, '1h');
+  var hasThreeHour = Object.prototype.hasOwnProperty.call(snow, '3h');
+  var key = hasOneHour ? '1h' : (hasThreeHour ? '3h' : null);
+  if (!key) {
+    return null;
+  }
+  var parsed = Number(snow[key]);
+  if (isNaN(parsed)) {
+    return null;
+  }
+  return { amount: Math.round(parsed * 10) / 10, label: key };
+}
+
+function formatSunTime(timestamp) {
+  if (!timestamp) {
+    return null;
+  }
+  var date = new Date(Number(timestamp) * 1000);
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+  return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+}
+%>
 <div class="main">
 <div class="container">
 
@@ -14,12 +46,28 @@
 
 <div class="center">
     <div class="container iflex">
-         <div class="container flexitem-align-top">
-           <img class="big-icon" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt="IMAGE">
+        <div class="container flexitem-align-top">
+          <img class="big-icon" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt="IMAGE">
          </div>
         <div class="container flexitem-align-top text-align-left">
           <h1 class="degre"><%= Math.round(data[0].main.temp) %></h1>
           <h1><%= data[0].weather[0].description %></h1>
+          <% var sunriseTime = formatSunTime(data[0].sys && data[0].sys.sunrise); %>
+          <% var sunsetTime = formatSunTime(data[0].sys && data[0].sys.sunset); %>
+          <% if (sunriseTime || sunsetTime) { %>
+            <div class="sun-cycle">
+              <% if (sunriseTime) { %>
+                <span class="sun-time sunrise">Lever: <strong><%= sunriseTime %></strong></span>
+              <% } %>
+              <% if (sunsetTime) { %>
+                <span class="sun-time sunset">Coucher: <strong><%= sunsetTime %></strong></span>
+              <% } %>
+            </div>
+          <% } %>
+          <% var currentSnow = formatSnowAmount(data[0].snow); %>
+          <% if (currentSnow) { %>
+            <p class="snow-accumulation">Neige (<%= currentSnow.label %>) : <%= currentSnow.amount %> mm</p>
+          <% } %>
         </div>
     </div>
     <div class="container center "></div>
@@ -55,6 +103,10 @@
                         <div><%= new Date(item.dt*1000).getHours()+"h" %></div>
                         <div><img class="forecast-image" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
                         <div class='degre'><%= Math.round(item.main.temp) %></div>
+                        <% var forecastSnow = formatSnowAmount(item.snow); %>
+                        <% if (forecastSnow) { %>
+                          <div class="snow-accumulation small">Neige: <%= forecastSnow.amount %> mm (<%= forecastSnow.label %>)</div>
+                        <% } %>
                       </div>
 
                     <%}%>
@@ -81,6 +133,10 @@
               <div><%=new Date(item.dt*1000).toLocaleDateString('fr-CA',options)%></div>
               <div><img class="medium-icon" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
               <div class='degre'><%= Math.round(item.main.temp) %></div>
+              <% var longTermSnow = formatSnowAmount(item.snow); %>
+              <% if (longTermSnow) { %>
+                <div class="snow-accumulation small">Neige: <%= longTermSnow.amount %> mm (<%= longTermSnow.label %>)</div>
+              <% } %>
              </div>
         </div>
 
@@ -88,9 +144,7 @@
   <%});%>
 </div>
 <div class="container"></div>
-
 </div>
 
 </div>
-<%- include partials/footer -%>
 </body>

@@ -117,6 +117,22 @@ h3 {
   display:inline-flex;
   flex-direction: column;
 }
+.sun-cycle{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  font-size:1rem;
+}
+.sun-time{
+  background-color: rgba(0, 0, 0, 0.45);
+  padding:6px 12px;
+  border-radius:20px;
+  letter-spacing:0.5px;
+}
+.sun-time strong{
+  margin-left:6px;
+}
 .panel-long-term{
   /*border:2px solid red;*/
   display:inline-flex;

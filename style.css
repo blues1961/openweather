@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1.2rem;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+}
+
+th {
+    background-color: #EEE;
+}
+
+tr:nth-child(2n+1) td {
+    background-color: #F5F5F5;
+}
+
+@media (max-width: 767px) {
+    table {
+        font-size: 1rem;
+    }
+    th,
+    td {
+        padding: 10px;
+    }
+}
