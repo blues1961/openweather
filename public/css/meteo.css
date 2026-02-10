@@ -1,90 +1,27 @@
 body {
   background-image: url("/images/bg-image.JPG");
-  background-repeat:no-repeat;
-  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   color: white;
-  padding:0;
-  margin:0;
-  height: 100%;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1 {
-  font-size: 3rem;
-}
-h2 {
-  font-size: 2.75rem;
-}
-h3 {
-  font-size: 2rem;
+h1, h2, h3, p {
+  margin: 0;
 }
 
+.topnav,
 .button {
-  display:inline-block;
-  border: none;
-  margin:0;
-  background-color: black;
-  opacity:40%;
-  color:white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-.container{
-    margin:auto;
-}
-.short-term{
-   margin: auto;
-   text-align: center;
-   padding-top:50px;
-}
-.center{
-   text-align: center;
+  background-color: rgba(0, 0, 0, 0.45);
+  overflow: hidden;
 }
 
-.big-icon {
-  height: 200px;
-  width: 200px;
-  padding:20px 20px;
-}
-
-.medium-icon {
-  height:90px;
-  width:90px;
-  padding:0px 20px;
-}
-
-.degre:after {
-  content: " \00b0 C"
-}
-
-.iflex{
-  display:inline-flex;
-  flex-direction:row;
-
-}
-.flexitem-align-top{
-  self-align:top;
-}
-.text-align-left{
-  text-align:left;
-}
-
-.long-term{
-  flex-direction:column;
-  border:2px solid black;
-}
-
-.topnav, .button {
-  background-color: black;
-  opacity:40%;
-   overflow: hidden;
-}
-
-/* Style the links inside the navigation bar */
 .topnav a {
-  display:inline-block;
+  display: inline-block;
   color: white;
   text-align: center;
   padding: 8px 10px;
@@ -92,93 +29,240 @@ h3 {
   font-size: 1.25rem;
 }
 
-/* Change the color of links on hover */
 .topnav a:hover:not(.active) {
   background-color: white;
   color: black;
 }
 
-
+.button {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 .button:hover:not(.active) {
-  background-color: black;
-  opacity:30%;
-  color: white;
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
-/* Add a color to the active/current link */
 .active {
-  background-color: black;
-  opacity:70%;
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
 }
 
-.current-weather{
-  display:inline-flex;
+.page-content {
+  width: min(1100px, 94vw);
+  margin: 24px auto 40px;
+}
+
+.current-summary-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.current-summary {
+  width: min(960px, 100%);
+  padding: 18px 22px;
+  border-radius: 16px;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.summary-city {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.summary-date {
+  margin-top: 4px;
+  font-size: 1.05rem;
+  opacity: 0.92;
+  text-transform: capitalize;
+}
+
+.summary-main {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.current-weather {
+  display: flex;
   flex-direction: column;
+  gap: 6px;
 }
-.sun-cycle{
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-  margin-top:10px;
-  font-size:1rem;
+
+.big-icon {
+  height: 120px;
+  width: 120px;
+  flex-shrink: 0;
 }
-.sun-time{
-  background-color: rgba(0, 0, 0, 0.45);
-  padding:6px 12px;
-  border-radius:20px;
-  letter-spacing:0.5px;
+
+.summary-temp {
+  font-size: 3rem;
+  line-height: 1;
 }
-.sun-time strong{
-  margin-left:6px;
+
+.summary-description {
+  font-size: 1.2rem;
+  text-transform: capitalize;
 }
-.panel-long-term{
-  /*border:2px solid red;*/
-  display:inline-flex;
+
+.sun-cycle {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sun-time {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.9rem;
+}
+
+.sun-time strong {
+  margin-left: 4px;
+}
+
+.discreet .sun-time {
+  opacity: 0.9;
+}
+
+.snow-accumulation {
+  margin-top: 2px;
+  color: #daf3ff;
+  font-size: 0.9rem;
+}
+
+.snow-accumulation.small {
+  font-size: 0.82rem;
+}
+
+.daily-history {
+  margin-top: 18px;
+  display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
-.long-term-item{
-
-  background-color:black;
-  opacity: 40%;
-  padding:10px;
-  margin:1px;
-  border:1px solid black;
-
-}
-.padding20{
-  padding:20px;
+.day-card {
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 14px;
 }
 
-.footer{
-  position:fixed;
-  width:100%;
-  bottom:0;
-  background-color: black;
-  opacity: 60%;
+.day-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.panel-left{
-
-
-  align-items:center-top;
+.day-card-header h3 {
+  font-size: 1.25rem;
+  text-transform: capitalize;
 }
-.panel-right{
-  align-self:flex-end;
-/*  margin-right: 50px; */
-/*  border:2px solid red;*/
 
+.day-count {
+  font-size: 0.88rem;
+  opacity: 0.86;
 }
-.main{
-/*  border:10px solid blue;*/
-  display:flex;
-  flex-direction: row;
-  align-items:center-top;
-  width:100%
 
+.day-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 10px;
 }
-.error, .location{
-  padding:20px;
+
+.day-value {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.value-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forecast-hour {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.forecast-image {
+  height: 56px;
+  width: 56px;
+}
+
+.value-temp {
+  margin-top: 2px;
+  font-size: 1.55rem;
+}
+
+.value-desc {
+  text-transform: capitalize;
+  font-size: 0.95rem;
+}
+
+.value-meta {
+  margin-top: 3px;
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+
+.empty-state {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.degre:after {
+  content: " \00b0 C";
+}
+
+.container {
+  margin: auto;
+}
+
+.error,
+.location {
+  padding: 20px;
+}
+
+@media (max-width: 760px) {
+  .summary-city {
+    font-size: 1.5rem;
+  }
+
+  .summary-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .big-icon {
+    height: 95px;
+    width: 95px;
+  }
+
+  .summary-temp {
+    font-size: 2.2rem;
+  }
+
+  .day-values {
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  }
 }

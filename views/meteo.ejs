@@ -1,24 +1,38 @@
- <body>
 <%- include partials/header -%>
 <%
-function formatSnowAmount(snow) {
-  if (!snow) {
+function toNumber(value) {
+  var parsed = Number(value);
+  return isNaN(parsed) ? null : parsed;
+}
+
+function round1(value) {
+  return Math.round(value * 10) / 10;
+}
+
+function formatPeriodAmount(periodData) {
+  if (!periodData) {
     return null;
   }
-  if (typeof snow === 'number' && !isNaN(Number(snow))) {
-    return { amount: Math.round(Number(snow) * 10) / 10, label: '3h' };
+  if (typeof periodData === 'number') {
+    var value = toNumber(periodData);
+    if (value === null) {
+      return null;
+    }
+    return { amount: round1(value), label: '3h' };
   }
-  var hasOneHour = Object.prototype.hasOwnProperty.call(snow, '1h');
-  var hasThreeHour = Object.prototype.hasOwnProperty.call(snow, '3h');
+
+  var hasOneHour = Object.prototype.hasOwnProperty.call(periodData, '1h');
+  var hasThreeHour = Object.prototype.hasOwnProperty.call(periodData, '3h');
   var key = hasOneHour ? '1h' : (hasThreeHour ? '3h' : null);
   if (!key) {
     return null;
   }
-  var parsed = Number(snow[key]);
-  if (isNaN(parsed)) {
+
+  var parsed = toNumber(periodData[key]);
+  if (parsed === null) {
     return null;
   }
-  return { amount: Math.round(parsed * 10) / 10, label: key };
+  return { amount: round1(parsed), label: key };
 }
 
 function formatSunTime(timestamp) {
@@ -31,120 +45,176 @@ function formatSunTime(timestamp) {
   }
   return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
 }
+
+function formatHour(timestamp) {
+  if (!timestamp) {
+    return '';
+  }
+  var date = new Date(Number(timestamp) * 1000);
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+  return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+}
+
+function formatDayLabel(timestamp) {
+  if (!timestamp) {
+    return '';
+  }
+  var date = new Date(Number(timestamp) * 1000);
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+  return date.toLocaleDateString('fr-CA', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+}
+
+function dayKeyFromTimestamp(timestamp) {
+  var date = new Date(Number(timestamp) * 1000);
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+  var year = String(date.getFullYear());
+  var month = String(date.getMonth() + 1).padStart(2, '0');
+  var dayValue = String(date.getDate()).padStart(2, '0');
+  return year + '-' + month + '-' + dayValue;
+}
+
+function getSnowRatio(tempC) {
+  if (tempC <= -15) return 20;
+  if (tempC <= -10) return 15;
+  if (tempC <= -5) return 12;
+  if (tempC <= -1) return 10;
+  if (tempC <= 1) return 8;
+  if (tempC <= 2) return 5;
+  return 0;
+}
+
+function isSnowWeather(item) {
+  if (!item || !Array.isArray(item.weather)) {
+    return false;
+  }
+  return item.weather.some(function(condition) {
+    var main = String(condition.main || '').toLowerCase();
+    var description = String(condition.description || '').toLowerCase();
+    return main.indexOf('snow') !== -1 || description.indexOf('snow') !== -1 || description.indexOf('neige') !== -1;
+  });
+}
+
+function estimateSnowFromPrecipitation(item) {
+  var tempC = toNumber(item && item.main && item.main.temp);
+  if (tempC === null) {
+    return null;
+  }
+
+  var snowPeriod = formatPeriodAmount(item && item.snow);
+  var rainPeriod = formatPeriodAmount(item && item.rain);
+  var hasSnow = isSnowWeather(item) || (snowPeriod && snowPeriod.amount > 0);
+  if (!hasSnow) {
+    return null;
+  }
+
+  var precipitation = snowPeriod || rainPeriod;
+  if (!precipitation || precipitation.amount <= 0) {
+    return null;
+  }
+
+  var ratio = getSnowRatio(tempC);
+  if (ratio <= 0) {
+    return null;
+  }
+
+  return {
+    cm: round1((precipitation.amount * ratio) / 10),
+    mm: precipitation.amount,
+    label: precipitation.label,
+    ratio: ratio
+  };
+}
+
+var forecastByDay = {};
+var forecastList = data[1] && Array.isArray(data[1].list) ? data[1].list : [];
+forecastList.forEach(function(item) {
+  var key = dayKeyFromTimestamp(item.dt);
+  if (!key) {
+    return;
+  }
+  if (!forecastByDay[key]) {
+    forecastByDay[key] = [];
+  }
+  forecastByDay[key].push(item);
+});
+
+var displayDays = Object.keys(forecastByDay).sort();
 %>
-<div class="main">
-<div class="container">
 
-</div>
-  <div class="panel-left">
-
-<div class="center">
-     <h2><%=data[0].name%>, <%=data[0].sys.country%></h2>
-     <% var options = {day:'numeric',month:'long',year:'numeric'} %>
-     <h3><%=new Date(data[0].dt*1000).toLocaleDateString('fr-CA',options)%></h3>
-</div>
-
-<div class="center">
-    <div class="container iflex">
-        <div class="container flexitem-align-top">
-          <img class="big-icon" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt="IMAGE">
-         </div>
-        <div class="container flexitem-align-top text-align-left">
-          <h1 class="degre"><%= Math.round(data[0].main.temp) %></h1>
-          <h1><%= data[0].weather[0].description %></h1>
+<div class="page-content">
+  <section class="current-summary-wrap">
+    <div class="current-summary">
+      <p class="summary-city"><%= data[0].name %>, <%= data[0].sys.country %></p>
+      <p class="summary-date"><%= formatDayLabel(data[0].dt) %></p>
+      <div class="summary-main">
+        <img class="big-icon" src="http://openweathermap.org/img/wn/<%= data[0].weather[0].icon %>@2x.png" alt="Icone meteo">
+        <div class="current-weather">
+          <h1 class="summary-temp degre"><%= Math.round(data[0].main.temp) %></h1>
+          <p class="summary-description"><%= data[0].weather[0].description %></p>
           <% var sunriseTime = formatSunTime(data[0].sys && data[0].sys.sunrise); %>
           <% var sunsetTime = formatSunTime(data[0].sys && data[0].sys.sunset); %>
           <% if (sunriseTime || sunsetTime) { %>
-            <div class="sun-cycle">
+            <div class="sun-cycle discreet">
               <% if (sunriseTime) { %>
-                <span class="sun-time sunrise">Lever: <strong><%= sunriseTime %></strong></span>
+                <span class="sun-time">Levee: <strong><%= sunriseTime %></strong></span>
               <% } %>
               <% if (sunsetTime) { %>
-                <span class="sun-time sunset">Coucher: <strong><%= sunsetTime %></strong></span>
+                <span class="sun-time">Coucher: <strong><%= sunsetTime %></strong></span>
               <% } %>
             </div>
           <% } %>
-          <% var currentSnow = formatSnowAmount(data[0].snow); %>
+          <% var currentSnow = estimateSnowFromPrecipitation(data[0]); %>
           <% if (currentSnow) { %>
-            <p class="snow-accumulation">Neige (<%= currentSnow.label %>) : <%= currentSnow.amount %> mm</p>
+            <p class="snow-accumulation">Neige estimee: <strong><%= currentSnow.cm %> cm</strong> (ratio <%= currentSnow.ratio %>:1, <%= currentSnow.mm %> mm/<%= currentSnow.label %>)</p>
           <% } %>
         </div>
+      </div>
     </div>
-    <div class="container center "></div>
-</div>
+  </section>
 
-<div class="center padding20">
+  <section class="daily-history">
+    <% if (!displayDays.length) { %>
+      <p class="empty-state">Aucune prevision disponible.</p>
+    <% } %>
 
-    <form action="/" method="post">
-
-    <%if (day=='today') { %>
-          <button class="button active" name="button" value="today" onclick="this.form.submit();">Aujourdh'ui</button><!--
-          --><button class="button" name="button" value="tomorrow" onclick="this.form.submit();">Demain</button>
-          <input type="hidden" name="city" value=<%=city%>>
-          <input type="hidden" name="day" value=<%=day%>>
-    <% } else { %>
-          <button class="button" name="button" value="today" onclick="this.form.submit()">Aujourdh'ui</button><!--
-          --><button class="button active" name="button" value="tomorrow" onclick="this.form.submit()">Demain</button>
-          <input type="hidden" name="city" value=<%=city%>>
-          <input type="hidden" name="day" value=<%=day%>>
-                  <%}%>
-            </form>
-  </div>
-
-
-<div class="short-term">
-          <div class="iflex" >
-                <% todayDT    = new Date(data[0].dt*1000) %>
-                <% tomorrowDT = new Date(); tomorrowDT.setDate(todayDT.getDate() + 1) %>
-                <% if  (day=='today') {targetDate=todayDT.getDate()} else {targetDate=tomorrowDT.getDate()}%>
-                <% data[1].list.forEach(function(item){ %>
-                    <% if (new Date(item.dt*1000).getDate()==targetDate) {  %>
-                        <div container>
-                        <div><%= new Date(item.dt*1000).getHours()+"h" %></div>
-                        <div><img class="forecast-image" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
-                        <div class='degre'><%= Math.round(item.main.temp) %></div>
-                        <% var forecastSnow = formatSnowAmount(item.snow); %>
-                        <% if (forecastSnow) { %>
-                          <div class="snow-accumulation small">Neige: <%= forecastSnow.amount %> mm (<%= forecastSnow.label %>)</div>
-                        <% } %>
-                      </div>
-
-                    <%}%>
-                <% }); %>
-
-          </div>
-</div>
-</div>
-
-<div class="container">
-
-</div>
-
-<div class="panel-right">
-
-<div class="panel-long-term">
-
-  <% data[1].list.forEach(function(item){ %>
-      <% hour=new Date(item.dt*1000).getHours() %>
-      <%if (hour > 12 && hour < 16) { %>
-          <% var options = {weekday:'long'} %>
-          <div class='long-term-item'>
-             <div class = 'center'>
-              <div><%=new Date(item.dt*1000).toLocaleDateString('fr-CA',options)%></div>
-              <div><img class="medium-icon" src="http://openweathermap.org/img/wn/<%=item.weather[0].icon%>@2x.png" alt=""></div>
-              <div class='degre'><%= Math.round(item.main.temp) %></div>
-              <% var longTermSnow = formatSnowAmount(item.snow); %>
-              <% if (longTermSnow) { %>
-                <div class="snow-accumulation small">Neige: <%= longTermSnow.amount %> mm (<%= longTermSnow.label %>)</div>
-              <% } %>
-             </div>
+    <% displayDays.forEach(function(dayKey) { %>
+      <% var entries = forecastByDay[dayKey].slice(0, 8); %>
+      <article class="day-card">
+        <div class="day-card-header">
+          <h3><%= formatDayLabel(entries[0].dt) %></h3>
+          <span class="day-count"><%= entries.length %>/8 valeurs</span>
         </div>
-
-    <%};%>
-  <%});%>
-</div>
-<div class="container"></div>
-</div>
-
+        <div class="day-values">
+          <% entries.forEach(function(item) { %>
+            <% var snowEstimate = estimateSnowFromPrecipitation(item); %>
+            <div class="day-value">
+              <div class="value-top">
+                <span class="forecast-hour"><%= formatHour(item.dt) %></span>
+                <img class="forecast-image" src="http://openweathermap.org/img/wn/<%= item.weather[0].icon %>@2x.png" alt="Icone meteo">
+              </div>
+              <p class="value-temp degre"><%= Math.round(item.main.temp) %></p>
+              <p class="value-desc"><%= item.weather[0].description %></p>
+              <p class="value-meta">Humidite: <%= item.main.humidity %>% | Vent: <%= Math.round(item.wind.speed) %> m/s</p>
+              <% if (snowEstimate) { %>
+                <p class="snow-accumulation small">Neige estimee: <strong><%= snowEstimate.cm %> cm</strong> (ratio <%= snowEstimate.ratio %>:1, <%= snowEstimate.mm %> mm/<%= snowEstimate.label %>)</p>
+              <% } %>
+            </div>
+          <% }); %>
+        </div>
+      </article>
+    <% }); %>
+  </section>
 </div>
 </body>
+</html>

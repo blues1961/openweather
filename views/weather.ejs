@@ -41,7 +41,7 @@ function formatSunTime(timestamp) {
   -->
      <div class="container">
         <h3><%=data[0].name%>, <%=data[0].sys.country%></h3>
-        <% var options = {day:'numeric',month:'long',year:'numeric'}; %>
+        <% var options = {weekday:'long',day:'numeric',month:'long',year:'numeric'}; %>
         <h3> <%=new Date(data[0].dt*1000).toLocaleDateString('fr-CA',options)%> </h3>
         <span class="current-data">
             <img class="big-icon current-data" src="http://openweathermap.org/img/wn/<%=data[0].weather[0].icon%>@2x.png" alt=""/>
