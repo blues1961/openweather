@@ -146,7 +146,7 @@ async function main() {
     console.log('  --endpoint <path>       API endpoint path (default: /api/secrets)');
     console.log('  --token <token>         Bearer token');
     console.log('  --encryptionKey <key>   Local decryption key for encrypted payloads');
-    console.log('  --output <path>         Output .env path (default: .env)');
+    console.log('  --output <path>         Output .env path (default: .env.local)');
     console.log('  --template <path>       Template path (default: .env.example)');
     console.log('  --help                  Print this help');
     return;
@@ -156,7 +156,7 @@ async function main() {
   const envName = args.env || process.env.SECRETS_ENV || 'dev';
   const baseUrl = (args.baseUrl || process.env.SECRETS_BASE_URL || 'https://mdp.mon-site.ca').replace(/\/$/, '');
   const endpoint = args.endpoint || process.env.SECRETS_ENDPOINT || '/api/secrets';
-  const outputPath = path.resolve(args.output || process.env.SECRETS_OUTPUT_FILE || '.env');
+  const outputPath = path.resolve(args.output || process.env.SECRETS_OUTPUT_FILE || '.env.local');
   const templatePath = path.resolve(args.template || process.env.SECRETS_TEMPLATE_FILE || '.env.example');
   const token = args.token || process.env.SECRETS_ACCESS_TOKEN || '';
   const encryptionKey = args.encryptionKey || process.env.SECRETS_ENCRYPTION_KEY || '';

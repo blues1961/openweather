@@ -5,6 +5,7 @@
 ### Developpement (local)
 
 ```bash
+make env-link-dev
 make dev-up
 make dev-ps
 make dev-logs
@@ -15,22 +16,26 @@ Application: `http://localhost:3003` (ou la valeur `DEV_WEB_PORT` dans `.env.dev
 ### Production (Linode + Traefik)
 
 ```bash
+make env-link-prod
 make env-local-perms
 make prod-up
 make prod-ps
 make prod-logs
 ```
 
-Le fichier `.env.local` est requis en dev et prod et ne doit jamais etre commit.
+Mode attendu:
+- `.env` est un lien symbolique vers `.env.dev` en developpement.
+- `.env` est un lien symbolique vers `.env.prod` sur Linode.
+- les secrets sont dans `.env.local` (non commite).
 
-## Gestion des secrets (.env)
+## Gestion des secrets (.env.local)
 
-Le fichier `.env` reste local et ne doit pas etre commit.
+Le fichier `.env.local` reste local et ne doit pas etre commit.
 
 ### 1. Initialiser le template
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
 ### 2. Recuperer les secrets depuis mdp.mon-site.ca
@@ -52,7 +57,7 @@ SECRETS_ENCRYPTION_KEY="ta_cle_locale" npm --prefix app run secrets:pull -- --ap
 - `SECRETS_ENDPOINT` (defaut: `/api/secrets`)
 - `SECRETS_ACCESS_TOKEN` (Bearer token)
 - `SECRETS_ENCRYPTION_KEY` (si payload chiffre)
-- `SECRETS_OUTPUT_FILE` (defaut: `.env`)
+- `SECRETS_OUTPUT_FILE` (defaut: `.env.local`)
 - `SECRETS_TEMPLATE_FILE` (defaut: `.env.example`)
 - `SECRETS_APP` (defaut: `openweather`)
 - `SECRETS_ENV` (defaut: `dev`)
@@ -82,5 +87,5 @@ Le script accepte ces formats JSON:
 Dans tous les cas, le script:
 
 - verifie les cles attendues de `.env.example`
-- ecrit `.env` en mode restreint (`600`)
+- ecrit `.env.local` en mode restreint (`600`)
 - n'affiche pas les valeurs secretes

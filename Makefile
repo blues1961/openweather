@@ -1,9 +1,15 @@
 COMPOSE_DEV=docker compose -f docker-compose.dev.yml --env-file .env.dev
 COMPOSE_PROD=docker compose -f docker-compose.prod.yml --env-file .env.prod
 
-.PHONY: dev-up dev-down dev-logs dev-ps prod-up prod-down prod-logs prod-ps env-local-perms
+.PHONY: env-link-dev env-link-prod env-local-perms dev-up dev-down dev-logs dev-ps prod-up prod-down prod-logs prod-ps
 
-dev-up:
+env-link-dev:
+	ln -sfn .env.dev .env
+
+env-link-prod:
+	ln -sfn .env.prod .env
+
+dev-up: env-link-dev env-local-perms
 	$(COMPOSE_DEV) up -d --build
 
 dev-down:
@@ -15,7 +21,7 @@ dev-logs:
 dev-ps:
 	$(COMPOSE_DEV) ps
 
-prod-up:
+prod-up: env-link-prod env-local-perms
 	$(COMPOSE_PROD) up -d --build
 
 prod-down:

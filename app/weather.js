@@ -1,10 +1,24 @@
-require('dotenv').config();
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
+const fs = require('fs');
 const path = require('path');
 const { URLSearchParams } = require('url');
+const dotenv = require('dotenv');
+
+const projectRoot = path.resolve(__dirname, '..');
+const envFiles = [
+  path.join(projectRoot, '.env.local'),
+  path.join(projectRoot, '.env'),
+  path.join(__dirname, '.env.local'),
+  path.join(__dirname, '.env'),
+];
+
+for (const file of [...new Set(envFiles)]) {
+  if (fs.existsSync(file)) {
+    dotenv.config({ path: file });
+  }
+}
 
 const {
   API_CITY,
