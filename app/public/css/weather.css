@@ -38,8 +38,15 @@ h3{
   display:flex;
   gap:15px;
   flex-wrap:wrap;
+  align-items:center;
   margin-top:10px;
   font-size:1.15rem;
+}
+.sun-context{
+  font-size:0.85rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  opacity:0.9;
 }
 .sun-time{
   background-color: rgba(0, 0, 0, 0.45);

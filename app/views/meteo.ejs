@@ -5,6 +5,26 @@ function toNumber(value) {
   return isNaN(parsed) ? null : parsed;
 }
 
+var cityTimezoneOffset = toNumber(data && data[0] && data[0].timezone);
+if (cityTimezoneOffset === null) {
+  cityTimezoneOffset = toNumber(data && data[1] && data[1].city && data[1].city.timezone);
+}
+if (cityTimezoneOffset === null) {
+  cityTimezoneOffset = 0;
+}
+
+function dateInCityTimezone(timestamp) {
+  var unix = toNumber(timestamp);
+  if (unix === null) {
+    return null;
+  }
+  var date = new Date((unix + cityTimezoneOffset) * 1000);
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+  return date;
+}
+
 function round1(value) {
   return Math.round(value * 10) / 10;
 }
@@ -36,51 +56,43 @@ function formatPeriodAmount(periodData) {
 }
 
 function formatSunTime(timestamp) {
-  if (!timestamp) {
+  var date = dateInCityTimezone(timestamp);
+  if (!date) {
     return null;
   }
-  var date = new Date(Number(timestamp) * 1000);
-  if (isNaN(date.getTime())) {
-    return null;
-  }
-  return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+  return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
 }
 
 function formatHour(timestamp) {
-  if (!timestamp) {
+  var date = dateInCityTimezone(timestamp);
+  if (!date) {
     return '';
   }
-  var date = new Date(Number(timestamp) * 1000);
-  if (isNaN(date.getTime())) {
-    return '';
-  }
-  return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+  return date.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
 }
 
 function formatDayLabel(timestamp) {
-  if (!timestamp) {
-    return '';
-  }
-  var date = new Date(Number(timestamp) * 1000);
-  if (isNaN(date.getTime())) {
+  var date = dateInCityTimezone(timestamp);
+  if (!date) {
     return '';
   }
   return date.toLocaleDateString('fr-CA', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   });
 }
 
 function dayKeyFromTimestamp(timestamp) {
-  var date = new Date(Number(timestamp) * 1000);
-  if (isNaN(date.getTime())) {
+  var date = dateInCityTimezone(timestamp);
+  if (!date) {
     return null;
   }
-  var year = String(date.getFullYear());
-  var month = String(date.getMonth() + 1).padStart(2, '0');
-  var dayValue = String(date.getDate()).padStart(2, '0');
+  var year = String(date.getUTCFullYear());
+  var month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  var dayValue = String(date.getUTCDate()).padStart(2, '0');
   return year + '-' + month + '-' + dayValue;
 }
 
@@ -166,8 +178,9 @@ var displayDays = Object.keys(forecastByDay).sort();
           <% var sunsetTime = formatSunTime(data[0].sys && data[0].sys.sunset); %>
           <% if (sunriseTime || sunsetTime) { %>
             <div class="sun-cycle discreet">
+              <span class="sun-context">Soleil</span>
               <% if (sunriseTime) { %>
-                <span class="sun-time">Levee: <strong><%= sunriseTime %></strong></span>
+                <span class="sun-time">Lever: <strong><%= sunriseTime %></strong></span>
               <% } %>
               <% if (sunsetTime) { %>
                 <span class="sun-time">Coucher: <strong><%= sunsetTime %></strong></span>
