@@ -1,0 +1,49 @@
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    container_name: meteo_web_prod
+    env_file:
+      - .env.prod
+      - .env.local
+    environment:
+      PORT: 3000
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:3000/healthz', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1));",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks:
+      - meteo_net
+      - edge
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=edge"
+      - "traefik.http.middlewares.meteo-redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.meteo-web.entrypoints=web"
+      - "traefik.http.routers.meteo-web.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.routers.meteo-web.middlewares=meteo-redirect-https"
+      - "traefik.http.routers.meteo-web.priority=1"
+      - "traefik.http.routers.meteo-web.service=meteo-web"
+      - "traefik.http.routers.meteo-websecure.entrypoints=websecure"
+      - "traefik.http.routers.meteo-websecure.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.routers.meteo-websecure.tls=true"
+      - "traefik.http.routers.meteo-websecure.tls.certresolver=le"
+      - "traefik.http.routers.meteo-websecure.priority=1"
+      - "traefik.http.routers.meteo-websecure.service=meteo-web"
+      - "traefik.http.services.meteo-web.loadbalancer.server.port=3000"
+
+networks:
+  meteo_net:
+    name: meteo_net_prod
+  edge:
+    external: true
+    name: edge

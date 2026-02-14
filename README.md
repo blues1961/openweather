@@ -1,5 +1,28 @@
 # openweather
 
+## Conteneurisation
+
+### Developpement (local)
+
+```bash
+make dev-up
+make dev-ps
+make dev-logs
+```
+
+Application: `http://localhost:3003` (ou la valeur `DEV_WEB_PORT` dans `.env.dev`).
+
+### Production (Linode + Traefik)
+
+```bash
+make env-local-perms
+make prod-up
+make prod-ps
+make prod-logs
+```
+
+Le fichier `.env.local` est requis en dev et prod et ne doit jamais etre commit.
+
 ## Gestion des secrets (.env)
 
 Le fichier `.env` reste local et ne doit pas etre commit.
@@ -13,13 +36,13 @@ cp .env.example .env
 ### 2. Recuperer les secrets depuis mdp.mon-site.ca
 
 ```bash
-SECRETS_ACCESS_TOKEN="ton_token" npm run secrets:pull -- --app openweather --env dev
+SECRETS_ACCESS_TOKEN="ton_token" npm --prefix app run secrets:pull -- --app openweather --env dev
 ```
 
 Si ton API retourne un payload chiffre (ex: `ciphertext`/`iv`/`tag`), ajoute:
 
 ```bash
-SECRETS_ENCRYPTION_KEY="ta_cle_locale" npm run secrets:pull -- --app openweather --env dev
+SECRETS_ENCRYPTION_KEY="ta_cle_locale" npm --prefix app run secrets:pull -- --app openweather --env dev
 ```
 
 ### Variables supportees par pull-secrets
