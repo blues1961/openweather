@@ -4,7 +4,10 @@
   "description": "",
   "main": "weather.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node weather.js",
+    "dev": "NODE_ENV=development node weather.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "secrets:pull": "node ../scripts/pull-secrets.js"
   },
   "author": "",
   "license": "ISC",

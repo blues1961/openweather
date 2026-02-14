@@ -1,9 +1,24 @@
-require('dotenv').config();
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
+const fs = require('fs');
+const path = require('path');
 const { URLSearchParams } = require('url');
+const dotenv = require('dotenv');
+
+const projectRoot = path.resolve(__dirname, '..');
+const envFiles = [
+  path.join(projectRoot, '.env.local'),
+  path.join(projectRoot, '.env'),
+  path.join(__dirname, '.env.local'),
+  path.join(__dirname, '.env'),
+];
+
+for (const file of [...new Set(envFiles)]) {
+  if (fs.existsSync(file)) {
+    dotenv.config({ path: file });
+  }
+}
 
 const {
   API_CITY,
@@ -14,11 +29,13 @@ const {
   FORECAST_BASE_URL,
   PORT = 3000,
 } = process.env;
+const weatherApiKey = API_KEY || process.env.OPENWEATHER_API_KEY;
 
 const app = express();
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 const defaultCity = API_CITY && API_CITY.trim() ? API_CITY.trim() : 'saint-jean-de-matha,ca';
 let selectedCity = defaultCity;
@@ -28,7 +45,7 @@ const buildWeatherUrl = (baseUrl, city) => {
   const params = new URLSearchParams({ q: city });
   if (API_LANGUE) params.append('lang', API_LANGUE);
   if (API_UNITS) params.append('units', API_UNITS);
-  if (API_KEY) params.append('appid', API_KEY);
+  if (weatherApiKey) params.append('appid', weatherApiKey);
   return `${baseUrl}?${params.toString()}`;
 };
 
@@ -70,6 +87,9 @@ app.get('/location', (req, res) => {
   res.render('location', viewModel('location'));
 });
 
+app.get("/healthz", (req, res) => res.status(200).send("ok"));
+
+
 app.post('/', (req, res) => {
   const { button, city } = req.body;
   if (button) {
@@ -84,6 +104,8 @@ app.post('/', (req, res) => {
 });
 
 const port = Number(PORT) || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}.`);
+const host = "0.0.0.0";
+
+app.listen(port, host, () => {
+  console.log(`Server is running on http://${host}:${port}`);
 });

@@ -1,0 +1,29 @@
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    container_name: meteo_web_dev
+    env_file:
+      - .env.dev
+      - .env.local
+    environment:
+      PORT: 3000
+    ports:
+      - "${DEV_WEB_PORT}:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    command: npm run dev
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:3000/healthz', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1));",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
