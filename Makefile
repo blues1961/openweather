@@ -3,10 +3,11 @@ COMPOSE_PROD=docker compose -f docker-compose.prod.yml --env-file .env.prod
 
 .DEFAULT_GOAL := help
 
-.PHONY: env-link-dev env-link-prod env-local-perms dev-up dev-down dev-logs dev-ps prod-up prod-down prod-logs prod-ps
+.PHONY: init-dev env-link-dev env-link-prod env-local-perms dev-up dev-down dev-logs dev-ps prod-up prod-down prod-logs prod-ps
 
 help:
 	@echo "Options disponibles:"
+	@echo "  make init-dev        # symlink .env + copie .env.local depuis Linode"
 	@echo "  make env-link-dev     # .env -> .env.dev"
 	@echo "  make env-link-prod    # .env -> .env.prod"
 	@echo "  make env-local-perms  # chmod 600 .env.local"
@@ -21,6 +22,10 @@ help:
 
 env-link-dev:
 	ln -sfn .env.dev .env
+
+init-dev: env-link-dev
+	scp linode:/opt/apps/meteo/.env.local .env.local
+	$(MAKE) env-local-perms
 
 env-link-prod:
 	ln -sfn .env.prod .env
